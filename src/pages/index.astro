@@ -1,17 +1,365 @@
 ---
+import '../styles/portfolio-home.css';
+import { getCollection } from 'astro:content';
 
+const baseRaw = import.meta.env.BASE_URL;
+const base = baseRaw.endsWith('/') ? baseRaw : `${baseRaw}/`;
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
+
+/** Placeholder rows from your static HTML (published posts are listed above from the collection). */
+const writingTeasers = [
+  {
+    title: 'Elasticsearch at 200M records: the index redesign nobody warns you about',
+    cat: 'Search',
+  },
+  {
+    title: 'Debugging hallucinations in a production multi-agent system at 2am',
+    cat: 'LLMs',
+  },
+  {
+    title: 'Why most agentic systems are over-engineered in the wrong places',
+    cat: 'Opinion',
+  },
+  {
+    title: 'LinkedIn AI agent — week 1 build log',
+    cat: 'Build log',
+  },
+] as const;
+
+const year = new Date().getFullYear();
+const repoUrl = 'https://github.com/abhii26-dev/abhishek-shukla';
+
+/** Put your PDF at `public/resume.pdf` (works with `base` on GitHub Pages). Or set to any absolute URL. */
+const resumeUrl = `${base}resume.pdf`;
+
+/** Full Calendly URL (link + iframe). Override with `PUBLIC_CALENDLY_URL` in `.env` if needed. */
+const envCalendly = import.meta.env.PUBLIC_CALENDLY_URL;
+const calendlyUrl =
+  typeof envCalendly === 'string' && envCalendly.trim().length > 0
+    ? envCalendly.trim()
+    : 'https://calendly.com/aashu-dev26';
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <meta name="generator" content={Astro.generator} />
+    <title>Abhishek Shukla — AI Systems Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>
+      <a href={`${base}`} class="nav-logo">Abhishek <span>Shukla</span></a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-dot">Open to work</div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-eyebrow">Software Engineer · AI Systems · India</div>
+      <h1>
+        I solve problems.<br />
+        I ship AI that works.<br />
+        I do the <em>right thing.</em>
+      </h1>
+      <div class="hero-bio reveal">
+        <p>
+          My name is Abhishek Shukla. I'm a software engineer who has spent the last 3+ years building AI
+          systems that work in production — not in notebooks, not in demos, but in environments handling <strong
+            >millions of requests across hundreds of millions of records.</strong
+          >
+          The satisfaction isn't in the cleverness of the architecture. It's in the thing actually working. Quietly.
+          At scale. While you sleep.
+        </p>
+        <p>
+          At <a href="https://cactusglobal.com" target="_blank" rel="noopener noreferrer">Cactus Communications</a> I
+          owned backend search infrastructure and designed multi-agent systems from scratch — the kind where you're
+          debugging hallucinations at 2am and reverse-engineering why a cost spike appeared in last night's run. I
+          reduced processing time by 80% and operational cost by 65%. Not because of one big insight. Because of a
+          hundred small ones about <strong>where the waste actually lives in an agent pipeline.</strong>
+        </p>
+        <p>
+          At <a href="https://gosunnyai.com" target="_blank" rel="noopener noreferrer">GoSunny AI</a> I was the technical
+          co-builder as a consultant — scraping infrastructure, agentic qualification workflows, backend systems, and
+          an LLM-driven nurture email pipeline for a US solar platform operating across 8 states. Essentially the
+          engineering team, minus the headcount.
+        </p>
+        <p>
+          My honest belief: most agentic systems today are over-engineered in the wrong places and under-controlled in
+          the right ones. <strong
+            >Models are evolving fast. If you wire them up carefully — right guardrails, right orchestration — cost and
+            latency drop dramatically.</strong
+          >
+          Most teams haven't done this yet. That's the interesting problem.
+        </p>
+        <p>When I'm not building: chess, music, figuring out how businesses actually work. All systems with rules you spend years learning to bend.</p>
+        <p>
+          I just went independent. Building my own projects, writing publicly about what I learn, and open to working on
+          ambitious things with people who care about doing it right. If a task is a no-brainer, it should be automated
+          or skipped. If you want someone to think — <a href="#contact">let's talk.</a>
+        </p>
+      </div>
+      <div class="hero-actions reveal d1">
+        <a href="#projects" class="btn btn-fill">See my work</a>
+        <a href="#writing" class="btn">Read my writing</a>
+        <a href={calendlyUrl} class="btn" target="_blank" rel="noopener noreferrer">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="stats-bar reveal d2">
+      <div class="stat">
+        <div class="stat-n">200<sup>M+</sup></div>
+        <div class="stat-l">Searchable records</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">1<sup>M+</sup></div>
+        <div class="stat-l">Daily API requests</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">80<sup>%</sup></div>
+        <div class="stat-l">Processing time cut</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">65<sup>%</sup></div>
+        <div class="stat-l">Cost reduction</div>
+      </div>
+    </div>
+
+    <div class="section reveal" id="work">
+      <div class="section-label">Experience</div>
+      <h2>Where I've <em>worked</em></h2>
+
+      <div class="exp-row">
+        <div>
+          <div class="exp-period">Mar 2023 – 2025</div>
+          <div class="exp-co">Cactus Communications</div>
+        </div>
+        <div>
+          <div class="exp-title">Software Engineer</div>
+          <div class="exp-desc">
+            Owned backend systems for large-scale search and AI workflows — <strong
+              >200M+ searchable records, 1M+ daily API requests.</strong
+            >
+            Redesigned Elasticsearch infrastructure: index schema, sharding strategy, query optimization. Built production
+            multi-agent systems using AutoGen with context-aware reasoning and state management. Then spent a lot of time
+            making sure those agents didn't hallucinate, spike costs, or fall over. <strong
+              >Reduced processing time 80%, operational cost 65%.</strong
+            >
+            Shipped on AWS (ECS, EC2, Lambda, SQS). Monitored everything with Grafana and Kibana, because production
+            systems whisper before they scream.
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <div>
+          <div class="exp-period">2024 – 2025</div>
+          <div class="exp-co">GoSunny AI</div>
+        </div>
+        <div>
+          <div class="exp-title">Tech Lead (Consultant)</div>
+          <div class="exp-desc">
+            GoSunny AI lets US homeowners get a solar quote, design, and financing agreement online — no
+            commission-based salesperson required. I built the technical backbone: <strong
+              >scraping infrastructure for lead sourcing, agentic qualification workflows, backend API layer, and an
+              LLM-driven nurture email pipeline</strong
+            > that moved cold leads toward signed installation agreements. The entire engineering function, compressed.
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <div>
+          <div class="exp-period">Sep 2022 – Feb 2023</div>
+          <div class="exp-co">Cactus Communications</div>
+        </div>
+        <div>
+          <div class="exp-title">Software Engineer Intern</div>
+          <div class="exp-desc">
+            Real-time notification system on AWS Lambda + Slack. SQS-triggered async pipelines. S3 automation. The
+            kind of infrastructure that's invisible when it's working and extremely visible when it isn't.
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <div>
+          <div class="exp-period">Mar – Jun 2022</div>
+          <div class="exp-co">Dotvik Solutions</div>
+        </div>
+        <div>
+          <div class="exp-title">Full Stack Developer Intern</div>
+          <div class="exp-desc">
+            Redesigned order APIs — 90% processing efficiency gain. Email templating with Velocity engine. First real
+            taste of making an existing system significantly faster by understanding it properly first.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section reveal" id="projects">
+      <div class="section-label">Projects</div>
+      <h2>Things I've <em>built</em></h2>
+
+      <div class="project-row">
+        <div>
+          <div class="project-index">01</div>
+          <div class="project-name">Ask R Discovery</div>
+          <div class="project-tagline">AI Research Assistant</div>
+          <p class="project-body">
+            AI-powered research assistant for academics. Ask a complex research question, get a citation-backed answer.
+            Under the hood: a multi-agent workflow — one agent for intent detection, one for document retrieval over
+            large-scale research data, one for LLM-based summarization. The kind of system that looks simple until you try
+            to make it consistently accurate.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Multi-agent</span><span class="tag">RAG</span>
+            <span class="tag">FastAPI</span><span class="tag">Elasticsearch</span><span class="tag">LLM eval</span>
+          </div>
+        </div>
+        <div class="project-aside">
+          <a href="#" class="project-link">View →</a>
+          <div class="project-status live">Live</div>
+        </div>
+      </div>
+
+      <div class="project-row">
+        <div>
+          <div class="project-index">02</div>
+          <div class="project-name">LinkedIn AI Agent</div>
+          <div class="project-tagline">Personal content engine — building in public</div>
+          <p class="project-body">
+            Crawls LinkedIn profiles of people whose content I want to learn from. Builds a knowledge base of their
+            tone, hooks, and structure patterns. Every morning: 3 post ideas on WhatsApp, each grounded in trending
+            topics and my knowledge base. I pick one, it drafts the post, sends it back for approval, then publishes.
+            Zero manual work. The interesting part: teaching the agent what "sounds like me" actually means.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Agents</span><span class="tag">pgvector</span>
+            <span class="tag">WhatsApp API</span><span class="tag">Apify</span><span class="tag">Buffer API</span>
+          </div>
+        </div>
+        <div class="project-aside">
+          <a href="#" class="project-link">Follow →</a>
+          <div class="project-status wip">Building</div>
+        </div>
+      </div>
+
+      <div class="project-row">
+        <div>
+          <div class="project-index">03</div>
+          <div class="project-name">Solar Lead Pipeline</div>
+          <div class="project-tagline">GoSunny AI — Full-stack AI sales system</div>
+          <p class="project-body">
+            End-to-end AI pipeline for a US solar company across 8 states. Scraping for homeowner lead sourcing,
+            agentic workflows for qualification, and an LLM-driven nurture email system. The goal: take a homeowner from
+            "interested in solar" to a signed installation agreement — with no commission-based salesperson in the loop.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Scraping</span><span class="tag">Agentic workflows</span>
+            <span class="tag">Email automation</span><span class="tag">FastAPI</span><span class="tag">AWS</span>
+          </div>
+        </div>
+        <div class="project-aside">
+          <a href="#" class="project-link">Case study →</a>
+          <div class="project-status live">Shipped</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section reveal" id="writing">
+      <div class="section-label">Writing</div>
+      <h2>How I <em>think</em></h2>
+      <div>
+        {
+          posts.map((post) => (
+            <a class="writing-row" href={`${base}blog/${post.id}/`}>
+              <span class="writing-date">{post.data.date}</span>
+              <span class="writing-title">{post.data.title}</span>
+              <span class="writing-cat">{(post.data.tags && post.data.tags[0]) || 'Writing'}</span>
+            </a>
+          ))
+        }
+        {
+          writingTeasers.map((t) => (
+            <a class="writing-row" href="#writing">
+              <span class="writing-date">Coming soon</span>
+              <span class="writing-title">{t.title}</span>
+              <span class="writing-cat">{t.cat}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="contact-section reveal" id="contact">
+      <div class="section-label" style="max-width:100%">Contact</div>
+      <p class="contact-intro">
+        If you're building something <em>ambitious</em> in the AI space and need someone who's actually shipped it in
+        production — let's talk.
+      </p>
+      <p class="contact-body">
+        I'm open to consulting on AI systems architecture, agentic workflow design, search infrastructure, or taking on
+        ambitious full-stack builds end-to-end. Also just happy to talk to people who care about doing things right.
+        No-brainer tasks need not apply.
+      </p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:aashuu.26m@gmail.com">
+          aashuu.26m@gmail.com <span>Email →</span>
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/abhishekshukla" target="_blank" rel="noopener noreferrer">
+          LinkedIn <span>Connect →</span>
+        </a>
+        <a class="contact-link" href={repoUrl} target="_blank" rel="noopener noreferrer">
+          GitHub <span>Code →</span>
+        </a>
+        <a class="contact-link" href={resumeUrl} target="_blank" rel="noopener noreferrer">
+          Resume <span>PDF →</span>
+        </a>
+        <a class="contact-link" href={calendlyUrl} target="_blank" rel="noopener noreferrer">
+          Book a call <span>Calendly →</span>
+        </a>
+      </div>
+    </div>
+
+    <footer>
+      <span class="footer-t">© {year} Abhishek Shukla</span>
+      <span class="footer-t">Rewa, India</span>
+      <span class="footer-t"
+        ><a href={repoUrl} target="_blank" rel="noopener noreferrer">Source</a> ·
+        <a href={resumeUrl} target="_blank" rel="noopener noreferrer">Resume</a> ·
+        <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">Calendly</a></span
+      >
+    </footer>
+
+    <script is:inline>
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add('up');
+          });
+        },
+        { threshold: 0.07 },
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+      setTimeout(() => {
+        document.querySelectorAll('.hero .reveal, .stats-bar').forEach((el) => el.classList.add('up'));
+      }, 120);
+    </script>
+  </body>
 </html>

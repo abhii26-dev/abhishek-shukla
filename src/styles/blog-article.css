@@ -1,0 +1,235 @@
+/* Matches portfolio-home light theme */
+:root {
+  --bg: #f5f2ed;
+  --bg2: #edeae3;
+  --ink: #1a1916;
+  --ink2: #4a4840;
+  --ink3: #8a8780;
+  --accent: #c8410a;
+  --accent2: #1a6644;
+  --border: rgba(26, 25, 22, 0.1);
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body.blog-post {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.blog-back {
+  display: inline-block;
+  max-width: 42rem;
+  margin: 0 auto;
+  width: 100%;
+  padding: 1.75rem 1.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.blog-back:hover {
+  color: var(--accent);
+}
+
+.blog-shell {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 5rem;
+}
+
+@media (min-width: 768px) {
+  .blog-back,
+  .blog-shell {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.blog-header {
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.blog-meta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.75rem;
+}
+
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.blog-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.55rem;
+  background: var(--bg2);
+}
+
+.blog-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4.5vw, 2.85rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.blog-dek {
+  margin-top: 1.25rem;
+  font-size: 1.05rem;
+  color: var(--ink2);
+  line-height: 1.75;
+  max-width: 36rem;
+}
+
+/* Markdown body */
+.article-body {
+  font-size: 1.02rem;
+  color: var(--ink2);
+  line-height: 1.85;
+}
+
+.article-body > :first-child {
+  margin-top: 0;
+}
+
+.article-body p {
+  margin: 0 0 1.35rem;
+}
+
+.article-body h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 3vw, 1.85rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.25;
+  margin: 2.5rem 0 1rem;
+  letter-spacing: -0.01em;
+}
+
+.article-body h2 em,
+.article-body h3 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.article-body h3 {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 2rem 0 0.75rem;
+}
+
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border);
+  transition: text-decoration-color 0.2s;
+}
+
+.article-body a:hover {
+  text-decoration-color: var(--accent);
+}
+
+.article-body strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.article-body ul,
+.article-body ol {
+  margin: 0 0 1.35rem;
+  padding-left: 1.35rem;
+}
+
+.article-body li {
+  margin-bottom: 0.5rem;
+}
+
+.article-body li::marker {
+  color: var(--ink3);
+}
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+.article-body blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+  color: var(--ink2);
+}
+
+.article-body code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg2);
+  padding: 0.15em 0.4em;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--ink);
+}
+
+.article-body pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.15rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.article-body pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.article-body em {
+  font-style: italic;
+}

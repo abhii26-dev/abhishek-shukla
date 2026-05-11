@@ -1,0 +1,61 @@
+---
+import '../../styles/blog-article.css';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((p) => !p.data.draft)
+    .map((post) => ({
+      params: { slug: post.id },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={post.data.description} />
+    <title>{post.data.title} — Abhishek Shukla</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="blog-post">
+    <a class="blog-back" href={`${base}`}>← Home</a>
+
+    <article class="blog-shell">
+      <header class="blog-header">
+        <p class="blog-meta">{post.data.date}</p>
+        <h1 class="blog-title">{post.data.title}</h1>
+        <p class="blog-dek">{post.data.description}</p>
+        {
+          post.data.tags && post.data.tags.length > 0 && (
+            <div class="blog-tags">
+              {post.data.tags.map((tag) => (
+                <span class="blog-tag">{tag}</span>
+              ))}
+            </div>
+          )
+        }
+      </header>
+      <div class="article-body">
+        <Content />
+      </div>
+    </article>
+  </body>
+</html>
