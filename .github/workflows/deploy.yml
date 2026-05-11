@@ -1,8 +1,11 @@
+# Pages must use GitHub Actions (not “Deploy from branch”):
+# https://github.com/abhii26-dev/abhishek-shukla/settings/pages → Build: GitHub Actions
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
