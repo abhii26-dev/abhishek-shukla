@@ -1,7 +1,7 @@
 ---
 title: "How I cut agent pipeline cost by 65%"
 description: "Where the waste actually lives in a production multi-agent system — and how to fix it."
-date: "2025-05-20"
+date: "2026-05-11"
 tags: ["agents", "llm", "production"]
 draft: false
 ---
